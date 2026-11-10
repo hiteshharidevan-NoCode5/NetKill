@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
-iport android.provider.Settings
+import android.provider.Settings
+import android.view.Gravity
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
@@ -16,11 +18,13 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val layout = android.widget.LinearLayout(this).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
+        
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
             setPadding(60, 100, 60, 60)
-            gravity = android.view.Gravity.CENTER_HORIZONTAL
+            gravity = Gravity.CENTER_HORIZONTAL
         }
+
         statusText = TextView(this).apply {
             text = "Internet Status: NORMAL"
             textSize = 20f
@@ -40,10 +44,12 @@ class MainActivity : Activity() {
                 try {
                     startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS))
                 } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, "Developer Options not unlocked yet", Toast.LENGTH_SHORT);                }
+                    Toast.makeText(this@MainActivity, "Developer Options not unlocked yet", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         layout.addView(btnDevTiles)
+
         setContentView(layout)
     }
 
@@ -62,7 +68,7 @@ class MainActivity : Activity() {
             startService(stopIntent)
             isKilled = false
             statusText.text = "Internet Status: NORMAL"
-            btnToggle.text = "KML ALL INTERNET"
+            btnToggle.text = "KILL ALL INTERNET"
         }
     }
 
